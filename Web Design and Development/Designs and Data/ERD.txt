@@ -1,0 +1,15 @@
+patient ekata Staffla keeyak aduma inna puluwanda? 1
+patient ekata Staffla keeyak wadima inna puluwanda? Many
+
+Staff ekata patientla keeyak aduma inna puluwanda? 0
+Staff ekata patientla keeyak wadima inna puluwanda? Many
+
+
+
+
+
+What is the minimum number of wards that room could have? 1
+What is the maximum of wards that room could have?  1
+
+What is the minimum number of rooms that ward could have? 1
+What is the maximum number of rooms that ward could have?Many
