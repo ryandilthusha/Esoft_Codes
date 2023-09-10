@@ -1,0 +1,133 @@
+====== Exercise 4 - SQL Basics 3 ======
+
+1 | Select employees whose address starts with number 9 and create a column where employee names are presented in a following format: Firstname First_letter_of_surname (For example SARA KOO -> SARA K). In addition for address and this new name column, present department and its duty in the result set. Order result set by department.
+--------------------------------------------------
+SELECT CONCAT(emps.GNAME, ' ', LEFT(emps.SURNAME, 1)) AS NAME, emps.ADDRESS, dept.DEPT, dept.DUTY 
+FROM emps INNER JOIN dept ON emps.DEPT = dept.DEPT 
+WHERE emps.ADDRESS LIKE '9%' 
+ORDER BY dept.DEPT;
+--------------------------------------------------
+
+##################################################
+2 | Select all departments and include also those departments where no one works. Include department and duty of department in the result set. (Please notice that by default all departments have employees so this query won't return any extra rows with default data!)
+--------------------------------------------------
+SELECT dept.DEPT, dept.DUTY
+FROM dept LEFT JOIN emps ON emps.DEPT = dept.DEPT
+GROUP BY dept.DEPT;
+--------------------------------------------------
+
+##################################################
+3 | Select employees whose province (PROV) is either NJ, ON or BC and whose manager's name starts with B (for example Black D). Present employee number, gname, surname and province in the result set.
+--------------------------------------------------
+SELECT emps.EMPNUM, emps.GNAME, emps.SURNAME, emps.PROV
+FROM emps INNER JOIN dept ON emps.DEPT = dept.DEPT
+WHERE emps.PROV IN ('NJ', 'ON', 'BC') AND dept.MANAGER LIKE 'B%';
+--------------------------------------------------
+
+##################################################
+4 | Select all managers whose department's budget is under 200000 and department they lead less than 10 employees. Present manager, budget and employee count in the result set. Order result set by employee count in descending order.
+--------------------------------------------------
+SELECT dept.MANAGER, dept.BUDGET, COUNT(emps.EMPNUM) AS EMP_COUNT
+FROM dept LEFT JOIN emps ON dept.DEPT = emps.DEPT
+GROUP BY dept.MANAGER, dept.BUDGET
+HAVING dept.BUDGET < 200000 AND COUNT(emps.EMPNUM) < 10
+ORDER BY EMP_COUNT DESC;
+--------------------------------------------------
+
+##################################################
+5 | Create two columns for the result set: One for employees so that employee name is presented in the following format: || Surname -- Firstname || (for example || Johnson -- Mike ||) and another which categorises employees in the following manner:
+
+    Cat1: Employees employee number is between 1-100 and department's budget is 100000 at most
+    Cat2: Employees employee number is between 101-300 and department's budget is between 100001 and 150000
+    Cat3: All other employees belong here
+--------------------------------------------------
+SELECT CONCAT('|| ', emps.SURNAME, ' -- ', emps.GNAME, ' ||') AS Employee_Name,
+CASE 
+    WHEN emps.EMPNUM BETWEEN 1 AND 100 AND dept.BUDGET <= 100000 THEN 'Cat1'
+    WHEN emps.EMPNUM BETWEEN 101 AND 300 AND dept.BUDGET BETWEEN 100001 AND 150000 THEN 'Cat2'
+    ELSE 'Cat3'
+END AS Category
+FROM emps LEFT JOIN dept ON emps.DEPT = dept.DEPT;
+--------------------------------------------------
+
+##################################################
+6 | Use UNION to combine the following two queries: Select employees who live in Winnipeg or Didsbury and another query for employees whose surnames first letter is between A-M. Include department, firstname, surname, address and city in the result set.
+--------------------------------------------------
+SELECT DEPT, GNAME, SURNAME, ADDRESS, CITY
+FROM emps 
+WHERE CITY IN ('Winnipeg','Didsbury')
+    UNION
+SELECT DEPT, GNAME, SURNAME, ADDRESS, CITY
+FROM emps
+WHERE SUBSTR(SURNAME, 1, 1) BETWEEN 'A' AND 'M';
+--------------------------------------------------
+
+##################################################
+7 | Use both UNION and JOIN and get the following information in one result set (use three different queries with UNION):
+
+    Employees who work in department having budget between 50000-100000
+    Employees whose address ends with RD
+    Employees whose department ID (dept) has only on letter (length is 1)
+
+The criteria presented below should be taken into consideration with the result set.
+
+    Result set should include department, budget, address, employees firstname and surname as well as computer's identifier
+    Result set should be in ascending order by department
+--------------------------------------------------
+SELECT dept.DEPT, dept.BUDGET, emps.ADDRESS, emps.GNAME, emps.SURNAME, emps.EMPNUM
+FROM emps INNER JOIN dept ON emps.DEPT = dept.DEPT
+WHERE dept.BUDGET BETWEEN 50000 AND 100000
+
+UNION
+
+SELECT dept.DEPT, dept.BUDGET, emps.ADDRESS, emps.GNAME, emps.SURNAME, emps.EMPNUM
+FROM emps INNER JOIN dept ON emps.DEPT = dept.DEPT
+WHERE emps.ADDRESS LIKE '%RD'
+
+UNION
+
+SELECT dept.DEPT, dept.BUDGET, emps.ADDRESS, emps.GNAME, emps.SURNAME, emps.EMPNUM
+FROM emps INNER JOIN dept ON emps.DEPT = dept.DEPT
+WHERE LENGTH(emps.DEPT) = 1
+
+ORDER BY DEPT ASC;
+--------------------------------------------------
+
+##################################################
+8 | Select employees working in departments Q-Z who have different rate value than any employees who work in department A. Tip: Use IN subquery!
+--------------------------------------------------
+SELECT *
+FROM emps
+WHERE DEPT BETWEEN 'Q' AND 'Z'  AND RATE NOT IN 
+  ( SELECT RATE 
+    FROM emps
+    WHERE DEPT = 'A' );
+--------------------------------------------------
+
+##################################################
+9 | Select employees whose firstname length is less than 5 and department's duty is same as the employee Alex Dettmer. Result set should include department, duty and the firstname and surname of employee.
+--------------------------------------------------
+SELECT emps.DEPT, dept.DUTY, emps.GNAME, emps.SURNAME
+FROM emps INNER JOIN dept ON emps.DEPT = dept.DEPT
+WHERE LENGTH(emps.GNAME) < 5 
+AND dept.DUTY = 
+    (SELECT dept.DUTY 
+    FROM dept INNER JOIN emps ON emps.DEPT = dept.DEPT
+    WHERE emps.SURNAME = 'Dettmer' AND emps.GNAME = 'Alex');
+--------------------------------------------------
+
+##################################################
+10 | Select firstname, surname and phone numbers of employees whose department's duty is any of the DIVs (DIV 1-15).
+--------------------------------------------------
+SELECT emps.GNAME, emps.SURNAME, emps.PHONE
+FROM emps INNER JOIN dept ON emps.DEPT = dept.DEPT
+WHERE dept.DUTY LIKE 'DIV %';
+--------------------------------------------------
+
+##################################################
+11 | Select all employees whose rate value is more than the average of all rate values.
+--------------------------------------------------
+SELECT *
+FROM emps
+WHERE RATE > (SELECT AVG(RATE) FROM emps);
+--------------------------------------------------

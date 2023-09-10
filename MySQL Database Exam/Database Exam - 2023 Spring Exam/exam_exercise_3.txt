@@ -1,0 +1,173 @@
+====== Exam ======
+
+QUESTION NO 3. Insert data to your database
+Insert at least three rows of data to each table in your database. You can choose the data freely.
+
+
+ANSWERS:
+--------------------------------------------------
+
+INSERT INTO Units (Unit_Name, Station_Number, Station_Address, Phone, Email) VALUES 
+('Colombo Central', 1, 'No. 15, Station Road, Colombo 02', 011223344, 'ccfd@gmail.com'),
+('Colombo North', 2, 'No. 25, Kandy Road, Colombo 05', 055667788, 'cnfd@gmail.com'),
+('Colombo South', 3, 'No. 78, School Road, Colombo 06', 099887766, 'csfd@gmail.com'),
+('Gampaha Central', 4, 'No. 96, Campus Road, Gampaha', 071234567, 'gcfd@gmail.com'),
+('Gampaha North', 5, 'No. 76, Ryan Avenue, Gampaha', 089898989, 'gnfd@gmail.com'),
+('Gampaha South', 6, 'No. 12, Gampaha Road, Gampaha', 077889900, 'gsfd@gmail.com'),
+('Kandy Central', 7, 'No. 3, Hamilton Avenue, Kandy', 081122334, 'kcfd@gmail.com'),
+('Kandy North', 8, 'No. 5, Siripathi Road, Kandy', 099887766, 'knfd@gmail.com'),
+('Kandy South', 9, 'No. 7, Kelaniya Road, Kandy', 055443322, 'ksfd@gmail.com'),
+('Jaffna Central', 10, 'No. 105, Negombo Road, Jaffna', 022446688, 'jcfd@gmail.com');
+
+
+
+INSERT INTO Employees (Unit_Id, Employee_Name, Employee_Position, Phone, Email) VALUES 
+(1, 'Samantha Silva', 'Officer', 0777123456, 'samanthasilva@gmail.com'),
+(1, 'Kamal Perera', 'Firefighter', 0771122334, 'kamalperera@gmail.com'),
+(2, 'Amali Fernando', 'Firefighter', 0754567890, 'amalifernando@gmail.com'),
+(2, 'Sampath Rajapaksa', 'Firefighter', 0777456789, 'sampathrajapaksa@gmail.com'),
+(3, 'Kavinda Jayawardena', 'Paramedic', 0767890123, 'kavindajayawardena@gmail.com'),
+(3, 'Nimasha Abeysekara', 'Paramedic', 0777678901, 'nimashaabeysekara@gmail.com'),
+(4, 'Saman Kumara', 'Firefighter', 0710123456, 'samankumara@gmail.com'),
+(4, 'Chathura Jayasinghe', 'Firefighter', 0779012345, 'chathurajayasinghe@gmail.com'),
+(5, 'Lakmini De Silva', 'Firefighter', 0777901234, 'lakminidesilva@gmail.com'),
+(5, 'Nalaka Weerasinghe', 'Officer', 0758901234, 'nalakaweerasinghe@gmail.com');
+
+
+INSERT INTO Vehicles (Unit_Id, Vehicle_Type, Capacity, Vehicle_Year) VALUES 
+(1, 'Fire Engine', '100 litres', '2013'),
+(1, 'Ambulance', '6 people', '2020'),
+(2, 'Fire Truck', '2000 litres', '2019'),
+(2, 'Utility Vehicle', '15 people', '2016'),
+(3, 'Ambulance', '4 people', '2015'),
+(3, 'Fire Engine', '150 litres', '2017'),
+(4, 'Fire Truck', '2730 litres', '2020'),
+(4, 'Utility Vehicle', '12 people', '2015'),
+(5, 'Fire Engine', '120 litres', '2019'),
+(5, 'Ambulance', '8 stretchers', '2023');
+
+INSERT INTO Mission_Types (Mission_Type_Name, Mission_Type_Severity, Mission_Type_Description) VALUES 
+('Building Fire', 'High', 'A fire in a building with structures.'),
+('Medical Emergency', 'Low', 'Urgent situation that requires immediate attention.'),
+('Gas Leak', 'Low', 'A kitchen where there is a gas leak.'),
+('Water Rescue', 'High', 'A student and animal is in in the water.'),
+('Car Accident', 'Medium', 'A situation where a car has been in an accident.'),
+('Electrical Hazard', 'High', 'Situation where there is an wire short.'),
+('Chemical Spill', 'High', 'University where there has been a acid spill.'),
+('Car Fire', 'Medium', 'A fire in a car.'),
+('Smoke Investigation', 'Low', 'An investigation into a report of smoke.'),
+('Lad Fire', 'Medium', 'A fire involving a property.');
+
+
+INSERT INTO Missions (Mission_Type_Id, Mission_Date, Start_Time, Mission_Duration, Location) VALUES 
+(1, '2021-01-20', '09:15:00', '00:45:00', 'No. 15, Main Street, Pettah, Colombo'),
+(2, '2021-09-21', '11:30:00', '01:22:00', 'No. 78, 1st Lane, Kotahena, Colombo'),
+(3, '2021-08-12', '14:00:00', '00:33:00', 'No. 52, Galle Road, Wellawatte, Colombo'),
+(4, '2022-02-11', '08:00:00', '02:07:00', 'No. 25, Main Street, Mirigama, Gampaha'),
+(5, '2022-07-21', '11:30:00', '01:30:00', 'No. 87, Negombo Road, Negombo, Gampaha'),
+(6, '2022-03-22', '15:00:00', '06:25:00', 'No. 96, Kandy Road, Kadawatha, Gampaha'),
+(7, '2023-05-27', '07:45:00', '02:15:00', 'No. 63, Peradeniya Road, Peradeniya, Kandy'),
+(8, '2023-03-29', '11:00:00', '01:20:00', 'No. 32, Main Street, Gampola, Kandy'),
+(9, '2023-02-26', '14:30:00', '07:45:00', 'No. 78, Kandy Road, Katugastota, Kandy'),
+(10, '2023-03-19', '08:30:00', '04:20:00', 'No. 105, Hospital Road, Jaffna Town, Jaffna');
+
+
+INSERT INTO Mission_Units (Mission_Id, Unit_Id) VALUES 
+(1, 1),
+(2, 2),
+(3, 1),
+(4, 4),
+(5, 4),
+(6, 5),
+(7, 9),
+(8, 8),
+(9, 7),
+(10, 10);
+
+--------------------------------------------------
+
+
+
+##################################################
+##################################################
+
+QUESTION NO 4. Database queries
+After the data insertion, run the following queries to your database. You can select columns for result set freely if not stated otherwise in the question. Try to select columns that will give the necessary information for each question. It doesn’t matter whether you have the exact data that matches the query, but more importantly that your query is valid and can be run to database you have designed.
+
+
+
+QUESTION & ANSWERS:
+
+a) Select one mission report of your choice and include all information related to it (timing, location, severity and description).
+--------------------------------------------------
+SELECT Missions.Mission_Date, Missions.Start_Time, Missions.Mission_Duration, Missions.Location, Mission_Types.Mission_Type_Name AS Mission_Type, Mission_Types.Mission_Type_Severity AS Severity, Mission_Types.Mission_Type_Description AS Details
+FROM Missions
+INNER JOIN Mission_Types ON Missions.Mission_Type_Id = Mission_Types.Mission_Type_Id
+WHERE Missions.Mission_Id = 3;
+--------------------------------------------------
+
+
+##################################################
+b) Select all missions that occurred in year 2022.
+--------------------------------------------------
+SELECT *
+FROM Missions
+WHERE Mission_Date LIKE '2022%';
+--------------------------------------------------
+
+
+
+##################################################
+c) Select all missions that had at least two participating units.
+--------------------------------------------------
+SELECT Missions.Mission_Id, Missions.Location, COUNT(*) AS Operated_Unit_Count
+FROM Missions
+INNER JOIN Mission_Units ON Missions.Mission_Id = Mission_Units.Mission_Id
+GROUP BY Missions.Mission_Id
+HAVING Operated_Unit_Count >= 2;
+--------------------------------------------------
+
+
+
+
+##################################################
+d) Select all missions that have lasted at least five hours.
+--------------------------------------------------
+SELECT *
+FROM Missions
+WHERE Mission_Duration >= '05:00:00';
+--------------------------------------------------
+
+
+
+
+
+
+##################################################
+e) Count how many missions have occurred for each severity.
+--------------------------------------------------
+SELECT Mission_Types.Mission_Type_Severity AS Severity, COUNT(*) AS Mission_Count
+FROM Missions
+INNER JOIN Mission_Types ON Missions.Mission_Type_Id = Mission_Types.Mission_Type_Id
+GROUP BY Mission_Types.Mission_Type_Severity;
+--------------------------------------------------
+
+
+
+
+
+
+##################################################
+f) Show unit (name or ID is enough) that has participated least on missions.
+--------------------------------------------------
+SELECT Units.Unit_Name, COUNT(*) AS Operated_Missions
+FROM Mission_Units
+RIGHT JOIN Units ON Mission_Units.Unit_Id = Units.Unit_Id
+GROUP BY Mission_Units.Unit_Id
+ORDER BY Operated_Missions ASC
+LIMIT 1;
+--------------------------------------------------
+
+
+
+

@@ -1,0 +1,61 @@
+====== Exercise 6 - SQL Basics 5 ======
+
+1 | Insert three new rows into accounts table:
+    - administrator type for employee 315 with priority number 100
+    - normal type for employee 422 with priority number 50
+    - guest type for employee 22 with priority number 20
+--------------------------------------------------
+INSERT INTO accounts (account_type, priority, empnum) VALUES 
+('administrator', 100, 315),
+('normal', 50, 422),
+('guest', 20, 22);
+--------------------------------------------------
+
+##################################################
+2 | Change the account_type for employee 22 so that it will be normal.
+--------------------------------------------------
+UPDATE accounts
+SET account_type = 'normal'
+WHERE empnum = 22;
+--------------------------------------------------
+
+##################################################
+3 | Raise the priority number of employee 22 by 20 %.
+--------------------------------------------------
+UPDATE accounts 
+SET priority = priority * 1.2 
+WHERE empnum = 22; 
+--------------------------------------------------
+
+##################################################
+4 | Create a new table called account_backup with similar structure as accounts table.
+--------------------------------------------------
+CREATE TABLE account_backup (
+  accountID INT NOT NULL AUTO_INCREMENT,
+  account_type VARCHAR(20) NOT NULL,
+  priority INT,
+  empnum decimal(3,0) NOT NULL,
+  last_update TIMESTAMP NOT NULL,
+  
+  PRIMARY KEY (accountID),
+  FOREIGN KEY (empnum) REFERENCES emps(EMPNUM));
+--------------------------------------------------
+
+##################################################
+5 | Copy the content of accounts table to account_backup with one query.
+--------------------------------------------------
+INSERT INTO account_backup (account_type, priority, empnum, last_update)
+SELECT account_type, priority, empnum, last_update
+FROM accounts;
+--------------------------------------------------
+
+##################################################
+6 | Remove the rows referring to employee 422 from accounts and account_backup tables.
+--------------------------------------------------
+BEGIN;
+
+DELETE FROM accounts WHERE empnum = 422;
+DELETE FROM account_backup WHERE empnum = 422;
+
+COMMIT;
+--------------------------------------------------

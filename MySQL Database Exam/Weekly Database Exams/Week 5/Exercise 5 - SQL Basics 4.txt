@@ -1,0 +1,68 @@
+====== Exercise 5 - SQL Basics 4 ======
+
+1 | Create a new table called accounts with the following columns:
+        - accountID (primary key)
+        - account_type (account type: guest, normal, administrator)
+        - priority (whole number which describes user's priority)
+--------------------------------------------------
+CREATE TABLE accounts (
+  accountID INT NOT NULL,
+  account_type VARCHAR(20) NOT NULL,
+  priority INT,
+  PRIMARY KEY (accountID)
+);
+--------------------------------------------------
+
+##################################################
+2 | Create a connection between accounts and emps tables (Tip: First think what column you should bring from emps table and then create a new column for it). Use the following options in foreign key definition:
+    - UPDATE CASCADE
+    - DELETE NO ACTION
+--------------------------------------------------
+ALTER TABLE accounts
+ADD COLUMN empnum decimal(3,0) NOT NULL,
+ADD FOREIGN KEY (empnum) REFERENCES emps(EMPNUM)
+ON UPDATE CASCADE 
+ON DELETE NO ACTION;
+--------------------------------------------------
+
+##################################################
+3 | Add a new column called last_update to the accounts table. The current date should be added automatically for this column when new data is inserted.
+--------------------------------------------------
+ALTER TABLE accounts
+ADD COLUMN last_update TIMESTAMP NOT NULL;
+--------------------------------------------------
+
+##################################################
+4 | Add automatic counter for accountID column so that this field value will be automatically generated each time a new data is inserted.
+--------------------------------------------------
+ALTER TABLE accounts
+MODIFY COLUMN accountID INT NOT NULL AUTO_INCREMENT;
+--------------------------------------------------
+
+##################################################
+5 | Create input validation check with TRIGGER. The following check has to be made:
+    - Account type must be one of the forementioned types: guest, normal or administrator.
+    - Negative priority numbers as well as priority numbers above 100 should not be allowed.
+--------------------------------------------------
+DELIMITER $$
+CREATE TRIGGER check_type_priority BEFORE INSERT ON accounts
+FOR EACH ROW
+    BEGIN
+    
+        IF NEW.account_type NOT IN ('guest', 'normal', 'administrator') THEN
+            SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Unknown account type!';
+        END IF;
+        
+        IF NEW.priority < 0 THEN
+            SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Priority level is too low!';
+        END IF;
+        
+        IF NEW.priority > 100 THEN
+            SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Priority level is too high!';
+        END IF;
+        
+    END $$
+--------------------------------------------------
